@@ -233,15 +233,19 @@
     }
 
     function uploadToDrive() {
-      const dataURL = warped.toDataURL('image/png');
-      fetch(DRIVE_UPLOAD_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ image: dataURL })
-      })
-      .then(() => alert('✅ Upload sent! Check your Drive folder.'))
-      .catch(err => alert('❌ Upload failed: ' + err.message));
-    }
+  const dataURL = warped.toDataURL('image/png');
+  fetch("https://script.google.com/macros/s/AKfycby1eepW4cUzuvWjM_r61A848NLQmXI9PumEW0j6mxdPQgAmLelaQOZolrKkB83cx_b0/exec", {
+    method: "POST",
+    mode: "no-cors", // 🟢 This is the key fix
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ image: dataURL })
+  })
+  .then(() => alert("✅ Upload request sent! Check your Google Drive."))
+  .catch(err => alert("❌ Upload failed: " + err.message));
+}
+
     uploadBtn.addEventListener('click', uploadToDrive);
   </script>
 </body>

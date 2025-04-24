@@ -234,18 +234,18 @@
 
     function uploadToDrive() {
   const dataURL = warped.toDataURL('image/png');
+
   fetch("https://script.google.com/macros/s/AKfycby1eepW4cUzuvWjM_r61A848NLQmXI9PumEW0j6mxdPQgAmLelaQOZolrKkB83cx_b0/exec", {
     method: "POST",
-    mode: "no-cors", // 🟢 This is the key fix
+    mode: "no-cors", // 🟢 Required to skip CORS enforcement
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "text/plain" // ✅ Skips preflight by avoiding JSON
     },
-    body: JSON.stringify({ image: dataURL })
+    body: JSON.stringify({ image: dataURL }) // 👈 still sending JSON, just not labeled as application/json
   })
-  .then(() => alert("✅ Upload request sent! Check your Google Drive."))
+  .then(() => alert("✅ Upload request sent! Check your Google Drive folder."))
   .catch(err => alert("❌ Upload failed: " + err.message));
 }
-
     uploadBtn.addEventListener('click', uploadToDrive);
   </script>
 </body>
